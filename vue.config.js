@@ -25,12 +25,14 @@ module.exports = defineConfig({
   css: {
     loaderOptions: {
       less: {
-        modifyVars: {
-          // less vars，customize ant design theme
-          // 'primary-color': '#F5222D',
-        },
-        // DO NOT REMOVE THIS LINE
-        javascriptEnabled: true,
+        lessOptions: {
+          // DO NOT REMOVE THIS LINE
+          javascriptEnabled: true,
+          globalVars: {
+            // less vars，customize ant design theme
+            // 'primary-color': '#F5222D',
+          }
+        }
       }
     }
   },

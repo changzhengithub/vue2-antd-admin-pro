@@ -1,52 +1,46 @@
 <template>
-  <el-container class="basic">
+  <a-layout class="basic">
     <!-- 侧边导航栏 start -->
-    <div class="basic-aside" >
-      <div class="aside-logo">
-        <img src="@/assets/images/logo.svg" alt="" />
-        <div class="logo-title">EleAdmin</div>
+    <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
+      <div class="basic-logo">
+        <img src="@/assets/images/logo.png" alt="" />
+        <div class="logo-title">综合管理系统</div>
       </div>
-      <div class="aside-menu">
-        <el-menu :default-active="selectedKeys" :collapse="collapsed" @select="onClickMenuItem">
-          <template v-for="item in menuList">
-            <el-menu-item :key="item.path" :index="item.path" v-if="!item.children">
-              <i class="el-icon-menu"></i>
-              <span slot="title">{{ item.meta.title }}</span>
-            </el-menu-item>
-            <el-submenu v-if="item.children" :key="item.path" :index="item.path">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span slot="title">{{ item.meta.title }}</span>
-              </template>
-              <el-menu-item v-for="subItem in item.children" :key="subItem.path" :index="subItem.path">
-                <i class="el-icon-menu"></i>
-                <span slot="title">{{ subItem.meta.title }}</span>
-              </el-menu-item>
-              <!-- <el-submenu index="1-4">
-                <span slot="title">选项4</span>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-              </el-submenu> -->
-            </el-submenu>
-          </template>
-        </el-menu>
-      </div>
-    </div>
-
+      <a-menu
+        mode="inline"
+        theme="dark"
+        :inline-collapsed="collapsed"
+      >
+        <template v-for="item in menuList" >
+          <a-menu-item :key="item.path" v-if="!item.children">
+            <arcoIcon :icon="item.meta.icon"></arcoIcon>
+            {{ item.meta.title }}
+          </a-menu-item>
+          <a-sub-menu v-if="item.children" :key="item.path">
+            <template #title>
+              <span><arcoIcon :icon="item.meta.icon"></arcoIcon>{{ item.meta.title }}</span>
+            </template>
+            <a-menu-item v-for="subItem in item.children" :key="subItem.path">
+              <arcoIcon :icon="subItem.meta.icon"></arcoIcon>
+              {{ subItem.meta.title }}
+            </a-menu-item>
+          </a-sub-menu>
+        </template>
+      </a-menu>
+    </a-layout-sider>
     <!-- 侧边导航栏 end -->
-    <el-container>
+
+    <a-layout>
       <!-- 头部 start -->
-      <el-header>
+      <a-layout-header>
         <GlobalHeader @COLLAPSE_EVENT="onCollapse"></GlobalHeader>
-      </el-header>
+      </a-layout-header>
       <!-- 头部 end -->
-      <el-container>
-        <el-main class="basic-layout">
-          <router-view />
-        </el-main>
-        <!-- <el-footer>Footer</el-footer> -->
-      </el-container>
-    </el-container>
-  </el-container>
+
+      <a-layout-content>Content</a-layout-content>
+      <!-- <a-layout-footer>Footer</a-layout-footer> -->
+    </a-layout>
+  </a-layout>
 
   <!-- <a-layout class="basic">
     <a-layout-sider hide-trigger collapsible :collapsed="collapsed">
@@ -152,53 +146,62 @@ export default {
   }
 }
 </script>
-
 <style lang="less" scoped>
 .basic {
   width: 100%;
+  min-height: 100vh;
   background-color: #fff;
-  .basic-aside {
-    width: 256px;
-    height: 100vh;
-    background: #001529;
-    transition: all .3s;
-    .aside-logo {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      height: 60px;
-      padding-left: 16px;
-      background: #001529;
+  .basic-logo {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 64px;
+    padding: 0 10px;
+    overflow: hidden;
+
+    // border-bottom: 1px solid #e8e8e8;
+    box-shadow: 1px 1px 1px #ccc;
+    transition: all 0.3s;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+    .logo-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-left: 10px;
+      display: inline-block;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      // transition: all 0.3s;
-      img {
-        width: 30px;
-        height: 30px;
-      }
-      .logo-title {
-        margin-left: 12px;
-        font-family: Avenir,Helvetica Neue,Arial,Helvetica,sans-serif;
-        font-size: 20px;
-        font-weight: 600;
-        color: #fff;
-        vertical-align: middle;
-      }
-    }
-    .aside-menu {
-      width: 100%;
-      height: calc(100% - 60px);
-      overflow-y: auto;
-    }
-    .logo-toggle {
-      width: 64px;
     }
   }
 
+  :deep(.arco-layout-header) {
+    height: 64px;
+    line-height: 64px;
+    background: var(--color-bg-3);
+  }
 
   .basic-layout {
+    // padding: 20px 0;
+    padding-top: 20px;
+    overflow: hidden;
     background-color: #f2f2f2;
+    .layout-content {
+      width: 100%;
+      padding: 0 20px 20px 20px;
+      height: calc(100vh - 84px);
+      font-size: 14px;
+      background-color: #f2f2f2;
+      overflow-y: auto;
+      .content-main {
+        width: 100%;
+        padding: 24px;
+        min-height: 500px;
+        background-color: #fff;
+      }
+    }
   }
 }
 </style>

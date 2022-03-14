@@ -12,7 +12,7 @@ import 'nprogress/nprogress.css'
 
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 
-import { Notification } from 'ant-design-vue'
+import notification from 'ant-design-vue/es/notification'
 
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
             })
           })
           .catch(() => {
-            Notification.error({
+            notification.error({
               message: '错误',
               description: '请求用户信息失败，请重试'
             })

@@ -1,10 +1,10 @@
 <template>
   <div class="global-header">
     <div class="header-left">
-      <el-button size="small" @click="toggleCollapse">
-        <i class="el-icon-s-fold" v-if="collapsed"></i>
-        <i class="el-icon-s-unfold" v-else></i>
-      </el-button>
+      <a-button size="small" @click="toggleCollapse">
+        <a-icon type="menu-fold" v-if="collapsed" />
+        <a-icon type="menu-unfold" v-else />
+      </a-button>
     </div>
     <div class="header-right">
       <el-dropdown>

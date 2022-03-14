@@ -2,7 +2,7 @@ import axios from 'axios'
 // import store from '@/store'
 import storage from 'store'
 import { ACCESS_TOKEN, USER_INFO } from '@/store/mutation-types'
-import { Notification } from 'ant-design-vue'
+import notification from 'ant-design-vue/es/notification'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -19,7 +19,7 @@ const errorHandler = (error) => {
     const token = storage.get(ACCESS_TOKEN)
 
     if (error.response.status === 404) {
-      Notification.error({
+      notification.error({
         title: '不存在该页面',
         message: data.message
       })
@@ -27,14 +27,14 @@ const errorHandler = (error) => {
     }
 
     if (error.response.status === 403) {
-      Notification.error({
+      notification.error({
         title: '未经授权',
         content: data.message
       })
     }
 
     if (error.response.status === 401) {
-      Notification.error({
+      notification.error({
         title: data.msg ? '提示' : '未经授权',
         content: data.msg ? data.msg : '授权验证失败'
       })
