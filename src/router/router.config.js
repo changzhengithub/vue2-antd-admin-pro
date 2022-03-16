@@ -29,7 +29,7 @@ export const asyncRouterMap = [
         path: '/home',
         name: 'Home',
         component: Home,
-        meta: { title: '首页', icon: 'form', keepAlive: true, permission: 'home' },
+        meta: { title: '首页', icon: 'home', keepAlive: true, permission: 'home' },
         hidden: false
       },
       // 组织管理
@@ -37,7 +37,7 @@ export const asyncRouterMap = [
         path: '/organize',
         name: 'Organize',
         component: RouteView,
-        meta: { title: '组织管理', icon: 'form', keepAlive: true, permission: 'org' },
+        meta: { title: '组织管理', icon: 'bar-chart', keepAlive: true, permission: 'org' },
         hidden: false,
         children: [
           // 单位管理
@@ -45,7 +45,7 @@ export const asyncRouterMap = [
             path: '/organize/unit',
             name: 'Unit',
             component: Unit,
-            meta: { title: '单位管理', icon: 'form', keepAlive: true, permission: 'unit' },
+            meta: { title: '单位管理', icon: 'api', keepAlive: true, permission: 'unit' },
             hidden: false
           },
           // 单位详情
@@ -61,7 +61,7 @@ export const asyncRouterMap = [
             path: '/organize/team',
             name: 'Team',
             component: Team,
-            meta: { title: '团队管理', icon: 'form', keepAlive: true, permission: 'team' },
+            meta: { title: '团队管理', icon: 'bug', keepAlive: true, permission: 'team' },
             hidden: false
           }
         ]
@@ -71,7 +71,7 @@ export const asyncRouterMap = [
         path: '/setting',
         name: 'Setting',
         component: Setting,
-        meta: { title: '设置', icon: 'form', keepAlive: true, permission: 'setting' },
+        meta: { title: '设置', icon: 'setting', keepAlive: true, permission: 'setting' },
         hidden: false
       }
     ]

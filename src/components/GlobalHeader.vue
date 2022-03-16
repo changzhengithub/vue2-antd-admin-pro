@@ -1,22 +1,30 @@
 <template>
   <div class="global-header">
-    <div class="header-left">
-      <a-button size="small" @click="toggleCollapse">
-        <a-icon type="menu-fold" v-if="collapsed" />
-        <a-icon type="menu-unfold" v-else />
-      </a-button>
+    <div class="header-operate">
+      <div class="operate-collapse" @click="toggleCollapse">
+        <a-icon type="menu-unfold" v-if="collapsed" />
+        <a-icon type="menu-fold" v-else />
+      </div>
     </div>
-    <div class="header-right">
-      <el-dropdown>
-        <div class="right-info">
-          <el-avatar :size="36" :src="userInfo.avatar"></el-avatar>
-          <div class="info-name"><span>{{ userInfo.name }}</span></div>
+    <div class="header-user">
+      <a-dropdown placement="bottomRight">
+        <div class="user-name">
+          <span>{{ userInfo.name }}</span>
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-if="userInfo.is_admin != 1" @click="openPersonalInfo">个人信息</el-dropdown-item>
-          <el-dropdown-item @click="logoutSubmit">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <template v-slot:overlay>
+          <a-menu class="ant-pro-drop-down">
+            <a-menu-item @click="openPersonalInfo">
+              <a-icon type="user" />
+              <span>个人信息</span>
+            </a-menu-item>
+            <a-menu-divider />
+            <a-menu-item @click="logoutSubmit">
+              <a-icon type="logout" />
+              <span>退出登录</span>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
     </div>
   </div>
 </template>
@@ -26,7 +34,7 @@
  * @description 头部右侧头像
  * @author changz
  * */
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import storage from 'store'
 import { USER_INFO } from '@/store/mutation-types'
 
@@ -35,15 +43,8 @@ export default {
   data() {
     return {
       userInfo: {}, // 个人信息
-      collapsed: false, // 是否折叠
-      memberDetail: {
-        visible: false,
-        id: ''
-      }
+      collapsed: false // 是否折叠
     }
-  },
-  computed: {
-    ...mapState([])
   },
   created() {
     this.userInfo = storage.get(USER_INFO)
@@ -63,23 +64,21 @@ export default {
     },
     // 退出登录
     logoutSubmit() {
-      console.log(111)
-      this.$confirm('确定要退出登录？?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.Logout()
-          .then(() => {
+      this.$confirm({
+        title: '提示',
+        content: '确定要退出登录？',
+        onOk: () => {
+          return this.Logout().then(() => {
             window.location.href = '/'
-          })
-          .catch((err) => {
-            this.$notify.error({
+          }).catch(err => {
+            this.$notification.error({
               title: '错误',
               message: err.message
             })
             window.location.href = '/'
           })
+        },
+        onCancel () {}
       })
     }
   }
@@ -88,26 +87,32 @@ export default {
 
 <style lang="less" scoped>
 .global-header {
-  // .flex_vertical_center_horizontal_between();
-  width: 100%;
-  height: 100%;
-
-  .header-right {
-    // .flex_vertical_center();
-    height: 100%;
-    .right-info {
-      // .flex_vertical_center();
-      .info-name {
-        padding-left: 10px;
-        text-align: right;
-        cursor: pointer;
-        height: 20px;
-        line-height: 20px;
-        margin-bottom: 2px;
-        font-size: 14px;
-        color: #333;
-      }
+  position: relative;
+  .flex_vertical_center_horizontal_between();
+  height: 64px;
+  padding: 0 20px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+  .header-operate {
+    .operate-collapse {
+      font-size: 20px;
+      cursor: pointer;
     }
+  }
+
+  .header-user {
+    .flex_vertical_center();
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.ant-pro-drop-down {
+  /deep/ .action {
+    margin-right: 8px;
+  }
+  /deep/ .ant-dropdown-menu-item {
+    min-width: 160px;
   }
 }
 </style>
