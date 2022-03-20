@@ -37,14 +37,13 @@ const login = (options) => {
 }
 
 const logout = () => {
-  return builder({}, '[测试接口] 注销成功')
+  return builder({}, '[测试接口] 注销成功', 200)
 }
 
-const info = options => {
-  console.log('options', options)
+const info = () => {
   const userInfo = {
     id: '4291d7da9005377ec9aec4a71ea837f',
-    name: '天野远子',
+    name: '超级管理员',
     role: 1,
     username: 'admin',
     password: '',
@@ -60,10 +59,10 @@ const info = options => {
     roleId: 'admin'
   }
 
-  return builder(userInfo)
+  return builder(userInfo, '获取用户信息', 200)
 }
 
 
 Mock.mock(/\/auth\/login/, 'post', login)
 Mock.mock(/\/auth\/logout/, 'post', logout)
-Mock.mock(/\/api\/user\/info/, 'get', info)
+Mock.mock(/\/user\/info/, 'get', info)

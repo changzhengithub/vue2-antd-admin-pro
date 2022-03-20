@@ -86,16 +86,14 @@ const empower = {
     // 登出
     Logout({ commit }) {
       return new Promise((resolve, reject) => {
-        logoutApi().then(response => {
-          if (response.code != 200) {
-            reject(response);
-            return
+        logoutApi().then(res => {
+          if (res.code == 200) {
+            commit('setPermission', []);
+            commit('setRouterList', []);
+            storage.remove(ACCESS_TOKEN);
+            storage.remove(USER_INFO);
           }
-          commit('setPermission', []);
-          commit('setRouterList', []);
-          storage.remove(ACCESS_TOKEN);
-          storage.remove(USER_INFO);
-          resolve();
+          resolve(res)
         }).catch(error => {
           reject(error);
         })

@@ -68,14 +68,24 @@ export default {
         title: '提示',
         content: '确定要退出登录？',
         onOk: () => {
-          return this.Logout().then(() => {
-            window.location.href = '/'
+          return this.Logout().then((res) => {
+            console.log(res)
+            if (res.code !== 200) {
+              this.$notification.error({
+                message: '错误',
+                description: res.message
+              })
+              return
+            }
+            this.$message.success(res.message)
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
           }).catch(err => {
             this.$notification.error({
               title: '错误',
               message: err.message
             })
-            window.location.href = '/'
           })
         },
         onCancel () {}

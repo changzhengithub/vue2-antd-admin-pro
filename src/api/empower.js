@@ -29,7 +29,7 @@ export function infoApi(parameter) {
 export function logoutApi(parameter) {
   return request({
     url: api.logout,
-    method: 'get',
-    params: parameter
+    method: 'post',
+    data: parameter
   })
 }

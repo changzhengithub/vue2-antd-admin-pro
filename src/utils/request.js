@@ -41,8 +41,8 @@ const errorHandler = (error) => {
       if (token) {
         storage.remove(ACCESS_TOKEN)
         storage.remove(USER_INFO)
+        window.location.reload()
       }
-      window.location.reload()
     }
   }
   return Promise.reject(error)
