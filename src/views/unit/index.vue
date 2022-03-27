@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <h1>单位管理</h1>
+    <a-button @click="togoPage(1)">详情</a-button>
   </div>
 </template>
 <script>
@@ -12,14 +13,14 @@ export default {
     }
   },
 
-  created() {
-    // this.getTeams()
-  },
+  created() {},
   methods: {
-    getTeams() {
-      this.$http.get('/workplace/teams').then(res => {
-        this.teams = res.result
-        this.teamSpinning = false
+    togoPage(id) {
+      this.$router.push({
+        name: 'UnitDetail',
+        params: {
+          id
+        }
       })
     }
   }

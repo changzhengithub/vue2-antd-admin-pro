@@ -156,15 +156,13 @@
 
   <script>
     (function isIEBrowse() {
-      var userAgent = navigator.userAgent
-      var isLessIE11 = userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1
-      var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf('rv:11.0') > -1
-      if (isLessIE11 || isIE11) {
-        var loadDom = document.getElementsByClassName('first-loading-wrp')[0];
-        var warnDom = document.getElementsByClassName('warn-tip')[0];
-        loadDom.style.display = 'none';
-        warnDom.style.display = 'block';
-        alert('该系统咱不支持IE浏览器，请使用其他浏览器进行访问！')
+      var isLessIE10 = navigator.appName == "Microsoft Internet Explorer" && parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE","")) < 10;
+      if (isLessIE10) {
+        // var loadDom = document.getElementsByClassName('first-loading-wrp')[0];
+        // var warnDom = document.getElementsByClassName('warn-tip')[0];
+        // loadDom.style.display = 'none';
+        // warnDom.style.display = 'block';
+        alert('您的浏览器版本过低，请使用IE10及以上版本！')
       }
     })()
   </script>

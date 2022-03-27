@@ -9,9 +9,11 @@
       <a-menu
         mode="inline"
         theme="dark"
-        :defaultSelectedKeys="selectedKeys"
+        :selectedKeys="selectedKeys"
+        :openKeys="openKeys"
         :inline-collapsed="collapsed"
         @select="onClickMenuItem"
+        @openChange="openParentKey"
       >
         <template v-for="item in menuList" >
           <a-menu-item :key="item.path" v-if="!item.children">
@@ -73,10 +75,17 @@ export default {
     })
   },
 
+  beforeRouteUpdate(to, from, next) {
+    this.getOpenKeys(to.path)
+    this.selectedKeys = [to.path]
+    next()
+  },
+
   created() {
     const menuList = this.getMeunList(this.routerList)
     this.menuList = menuList[0].children
     // this.menuList = asyncRouterMap[0].children
+    this.getOpenKeys(this.$route.path)
     this.selectedKeys = [this.$route.path]
   },
   methods: {
@@ -94,13 +103,29 @@ export default {
       return menuList
     },
 
+    // 路由跳转获取展开key
+    getOpenKeys(path) {
+      this.menuList.forEach(item => {
+        if (item.children && item.children.length) {
+          const bool = item.children.map(sub => sub.path).includes(path)
+          if (bool) this.openKeys = [item.path]
+        }
+      })
+    },
+
     // 折叠展开导航栏
     onCollapse() {
       this.collapsed = !this.collapsed
     },
 
+    // 展开subMenu
+    openParentKey(openKeys) {
+      this.openKeys = openKeys
+    },
+
     // 路由跳转
     onClickMenuItem({ key }) {
+      this.selectedKeys = [key]
       this.$router.push({
         path: key
       })
