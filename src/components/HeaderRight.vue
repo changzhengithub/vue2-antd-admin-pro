@@ -1,35 +1,50 @@
 <template>
-  <div class="global-header">
-    <div class="header-operate">
-      <div class="operate-collapse" @click="toggleCollapse">
-        <a-icon type="menu-unfold" v-if="collapsed" />
-        <a-icon type="menu-fold" v-else />
+  <div class="header-user">
+    <a-dropdown placement="bottomRight">
+      <div class="user-name" :class="{'user-top': mode == 'top'}">
+        <span>{{ userInfo.name }}</span>
       </div>
-    </div>
-    <HeaderRight mode="left"></HeaderRight>
+      <template v-slot:overlay>
+        <a-menu class="ant-pro-drop-down">
+          <a-menu-item @click="openPersonalInfo">
+            <a-icon type="user" />
+            <span>个人信息</span>
+          </a-menu-item>
+          <a-menu-divider />
+          <a-menu-item @click="logoutSubmit">
+            <a-icon type="logout" />
+            <span>退出登录</span>
+          </a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown>
   </div>
 </template>
 
 <script>
 /**
- * @description 基础布局头部
+ * @desc 头部右侧头像下拉
  * @author changz
- * */
+ * @param {String} [mode] - 模式 'left' 左侧导航 'top' 顶部导航
+ * @example 调用示例
+ * <HeaderRight mode="left"></HeaderRight>
+ */
+
 import { mapActions } from 'vuex'
 import storage from 'store'
 import { USER_INFO } from '@/store/mutation-types'
 
-import HeaderRight from './HeaderRight'
-
 export default {
-  name: 'GlobalHeader',
-  components: {
-    HeaderRight
+  name: 'HeaderRight',
+  props: {
+    mode: {
+      type: String,
+      default: 'left'
+    }
   },
   data() {
     return {
-      userInfo: {}, // 个人信息
-      collapsed: false // 是否折叠
+      userInfo: {} // 个人信息
     }
   },
   created() {
@@ -42,11 +57,6 @@ export default {
       this.$router.push({
         name: 'User'
       })
-    },
-    // 折叠展开导航栏
-    toggleCollapse() {
-      this.collapsed = !this.collapsed
-      this.$emit('COLLAPSE_EVENT')
     },
     // 退出登录
     logoutSubmit() {
@@ -82,24 +92,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.global-header {
-  position: relative;
-  .flex_vertical_center_horizontal_between();
-  height: 64px;
-  padding: 0 20px;
-  background: #fff;
-  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
-  .header-operate {
-    .operate-collapse {
-      font-size: 20px;
-      cursor: pointer;
-    }
+.header-user {
+  .flex_vertical_center();
+  height: 100%;
+  cursor: pointer;
+  .user-name {
+    color: #333;
   }
-
-  .header-user {
-    .flex_vertical_center();
-    height: 100%;
-    cursor: pointer;
+  .user-top {
+    color: #fff;
   }
 }
 
