@@ -48,6 +48,9 @@
 </template>
 
 <script>
+/**
+ * @description 顶部菜单布局
+ * */
 // import { asyncRouterMap } from '@/router/router.config'
 import { mapState } from 'vuex'
 import HeaderRight from '@/components/HeaderRight'
@@ -61,7 +64,8 @@ export default {
     return {
       menuList: [],
       currentRoute: '',
-      selectedKeys: []
+      selectedKeys: [],
+      openKeys: []
     }
   },
   computed: {
@@ -71,6 +75,7 @@ export default {
   },
 
   beforeRouteUpdate(to, from, next) {
+    this.getOpenKeys(to.path)
     this.selectedKeys = [to.path]
     next()
   },
@@ -79,6 +84,7 @@ export default {
     const menuList = this.getMeunList(this.routerList)
     this.menuList = menuList[0].children
     // this.menuList = asyncRouterMap[0].children
+    this.getOpenKeys(this.$route.path)
     this.selectedKeys = [this.$route.path]
   },
   methods: {
@@ -94,6 +100,20 @@ export default {
         return false
       })
       return menuList
+    },
+    // 路由跳转获取展开key
+    getOpenKeys(path) {
+      this.menuList.forEach(item => {
+        if (item.children && item.children.length) {
+          const bool = item.children.map(sub => sub.path).includes(path)
+          if (bool) this.openKeys = [item.path]
+        }
+      })
+    },
+
+    // 展开subMenu
+    openParentKey(openKeys) {
+      this.openKeys = openKeys
     },
     // 路由跳转
     onClickMenuItem({ key }) {

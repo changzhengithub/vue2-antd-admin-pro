@@ -51,6 +51,9 @@
 </template>
 
 <script>
+/**
+ * @description 侧栏菜单布局
+ * */
 // import { asyncRouterMap } from '@/router/router.config'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/GlobalHeader'
