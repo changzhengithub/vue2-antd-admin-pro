@@ -15,12 +15,11 @@ import 'ant-design-vue/dist/antd.css'
 import '@/permission'
 
 // 自定义指令
-import directives from '@/utils/directives'
+import '@/directives'
 
 Vue.config.productionTip = false
 
 Vue.use(Antd)
-Vue.use(directives)
 
 new Vue({
   router,
