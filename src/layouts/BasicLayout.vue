@@ -40,6 +40,9 @@
       </a-layout-header>
       <!-- 头部 end -->
 
+      <!-- 多标签页 -->
+      <MultiTab></MultiTab>
+
       <!-- 主体 start -->
       <a-layout-content>
         <!-- 是否缓存父组件层级 -->
@@ -61,10 +64,12 @@
 // import { asyncRouterMap } from '@/router/router.config'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/GlobalHeader'
+import MultiTab from '@/components/MultiTab'
 
 export default {
   components: {
-    GlobalHeader
+    GlobalHeader,
+    MultiTab
   },
 
   data() {
