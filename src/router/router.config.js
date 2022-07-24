@@ -1,4 +1,4 @@
-import { RouteView, BasicLayout } from '@/layouts'
+import { RouteView, PageView } from '@/layouts'
 
 /**
  * @desc 权限路由
@@ -21,7 +21,7 @@ export const asyncRouterMap = [
   {
     path: '/',
     name: 'Index',
-    component: BasicLayout,
+    component: PageView,
     redirect: '/home',
     children: [
       // 首页
