@@ -29,7 +29,7 @@ export const asyncRouterMap = [
         path: '/home',
         name: 'Home',
         component: Home,
-        meta: { title: '首页', icon: 'home', keepAlive: true, permission: 'home' },
+        meta: { title: '首页', icon: 'home', keepAlive: false, permission: 'home' },
         hidden: false
       },
       // 组织管理
@@ -37,7 +37,7 @@ export const asyncRouterMap = [
         path: '/organize',
         name: 'Organize',
         component: RouteView,
-        meta: { title: '组织管理', icon: 'bar-chart', keepAlive: true, permission: 'org' },
+        meta: { title: '组织管理', icon: 'bar-chart', keepAlive: false, permission: 'org' },
         hidden: false,
         children: [
           // 单位管理
@@ -81,7 +81,7 @@ export const asyncRouterMap = [
     path: '/user',
     name: 'User',
     component: User,
-    meta: { keepAlive: true, permission: 'user' }
+    meta: { keepAlive: false, permission: 'user' }
   }
 ]
 

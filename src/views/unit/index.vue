@@ -1,19 +1,24 @@
 <template>
-  <div class="about">
+  <div class="unit">
     <h1>单位管理</h1>
-    <a-button @click="togoPage(1)">详情</a-button>
+    <a-tabs default-active-key="1">
+      <a-tab-pane key="1" tab="Tab 1"> Content of Tab Pane 1 </a-tab-pane>
+      <a-tab-pane key="2" tab="Tab 2" force-render> Content of Tab Pane 2 </a-tab-pane>
+      <a-tab-pane key="3" tab="Tab 3"> Content of Tab Pane 3 </a-tab-pane>
+    </a-tabs>
   </div>
 </template>
 <script>
 export default {
-  name: 'Setting',
+  name: 'Unit',
   data() {
     return {
       tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']
     }
   },
-
-  created() {},
+  activated() {
+    console.log('111111')
+  },
   methods: {
     togoPage(id) {
       this.$router.push({

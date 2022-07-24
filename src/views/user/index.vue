@@ -1,11 +1,11 @@
 <template>
-  <div class="about">
+  <div class="user">
     <h1>用户信息</h1>
   </div>
 </template>
 <script>
 export default {
-  name: 'Setting',
+  name: 'User',
   data() {
     return {
       tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']

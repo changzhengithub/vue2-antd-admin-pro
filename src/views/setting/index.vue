@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="setting">
     <a-button @click="getSelectCode">设置</a-button>
     <editor ref="myEditor" v-model="editcode" @init="initEditor" lang="sqlserver" :options="editorOptions" theme="chrome"></editor>
   </div>
@@ -38,7 +38,7 @@ export default {
       //   console.log(e)
       // })
 
-      this.editor.getSession().on('changeSelection', (e) => {
+      this.editor.getSession().on('changeSelection', e => {
         console.log(e)
       })
     })
@@ -100,7 +100,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.about {
+.setting {
   width: 100%;
   height: 300px;
   text-overflow: ellipsis;

@@ -1,14 +1,20 @@
 <template>
-  <div class="about">
-    <h1>{{date}}</h1>
-    <h1>{{diffDate}}</h1>
-    <h1>{{stamp}}</h1>
+  <div class="team">
+    <h1>团队管理</h1>
+    <a-select default-value="lucy" style="width: 220px">
+      <a-select-option value="jack"> Jack </a-select-option>
+      <a-select-option value="lucy"> Lucy </a-select-option>
+      <a-select-option value="disabled" disabled> Disabled </a-select-option>
+      <a-select-option value="Yiminghe"> yiminghe </a-select-option>
+    </a-select>
+    <h1>{{ date }}</h1>
+    <h1>{{ diffDate }}</h1>
+    <h1>{{ stamp }}</h1>
   </div>
 </template>
 <script>
-
 export default {
-  name: 'Setting',
+  name: 'Team',
   data() {
     return {
       date: '',
@@ -21,8 +27,12 @@ export default {
 
   created() {
     // this.formatDate()
-    console.log(this.f(6))
+    // console.log(this.f(6))
   },
+  activated() {
+    console.log('2222')
+  },
+
   methods: {
     // formatDate() {
     //   f(0) = 1

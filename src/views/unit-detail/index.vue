@@ -1,11 +1,11 @@
 <template>
-  <div class="about">
+  <div class="unit-detail">
     <h1>单位详情</h1>
   </div>
 </template>
 <script>
 export default {
-  name: 'Setting',
+  name: 'UnitDetail',
   data() {
     return {
       tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']

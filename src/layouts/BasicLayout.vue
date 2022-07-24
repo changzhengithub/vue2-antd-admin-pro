@@ -42,7 +42,11 @@
 
       <!-- 主体 start -->
       <a-layout-content>
-        <router-view></router-view>
+        <!-- 是否缓存父组件层级 -->
+        <keep-alive>
+          <router-view :key="$route.fullPath" v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view :key="$route.fullPath" v-if="!$route.meta.keepAlive"></router-view>
       </a-layout-content>
       <!-- 主体 end -->
       <!-- <a-layout-footer>Footer</a-layout-footer> -->
