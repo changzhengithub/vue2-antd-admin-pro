@@ -7,7 +7,7 @@ import notification from 'ant-design-vue/es/notification'
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: window.api,
+  baseURL: process.env.NODE_ENV === 'development' ? process.env.VUE_APP_API_BASE_URL : window.api,
   timeout: 1000 * 60 * 10, // 请求超时时间
 })
 

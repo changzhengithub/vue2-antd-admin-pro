@@ -5,6 +5,7 @@ import { RouteView, BasicLayout } from '@/layouts'
  * @desc 走导航的路由都在根路由/里，走BasicLayout基础布局
  * @desc 不走导航的和根路由/放在同级或者放在根路由里加上hidden:true
  * @desc 不需登录的放在基础路由constantRouterMap里，并放在权限控制的白名单里才不会走权限验证
+ * @desc keepAlive是否缓存该组件，缓存必须在每一层router-view加keep-alive才会生效
  * */
 
 const Empower = () => import(/* webpackChunkName: 'empower' */ '@/views/empower')
@@ -15,6 +16,7 @@ const Unit = () => import(/* webpackChunkName: 'unit' */ '@/views/unit')
 const UnitDetail = () => import(/* webpackChunkName: 'unit-detail' */ '@/views/unit-detail')
 const Team = () => import(/* webpackChunkName: 'team' */ '@/views/team')
 const User = () => import(/* webpackChunkName: 'user' */ '@/views/user')
+const Upload = () => import(/* webpackChunkName: 'upload' */ '@/views/upload')
 const Setting = () => import(/* webpackChunkName: 'setting' */ '@/views/setting')
 
 export const asyncRouterMap = [
@@ -65,6 +67,14 @@ export const asyncRouterMap = [
             hidden: false
           }
         ]
+      },
+      // 文件上传
+      {
+        path: '/upload',
+        name: 'Upload',
+        component: Upload,
+        meta: { title: '文件上传', icon: 'upload', keepAlive: true, permission: 'upload' },
+        hidden: false
       },
       // 设置
       {
