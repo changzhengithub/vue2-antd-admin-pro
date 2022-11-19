@@ -34,7 +34,6 @@ export const asyncRouterMap = [
         meta: { title: '首页', icon: 'home', keepAlive: false, permission: 'home' },
         hidden: false
       },
-      // 组织管理
       {
         path: '/organize',
         name: 'Organize',
@@ -42,12 +41,11 @@ export const asyncRouterMap = [
         meta: { title: '组织管理', icon: 'bar-chart', keepAlive: false, permission: 'org' },
         hidden: false,
         children: [
-          // 单位管理
           {
             path: '/organize/unit',
             name: 'Unit',
             component: Unit,
-            meta: { title: '单位管理', icon: 'api', keepAlive: true, permission: 'unit' },
+            meta: { title: '递归组件', icon: 'api', keepAlive: false, permission: 'unit' },
             hidden: false
           },
           // 单位详情
@@ -55,7 +53,7 @@ export const asyncRouterMap = [
             path: '/organize/unit/:id',
             name: 'UnitDetail',
             component: UnitDetail,
-            meta: { title: '单位详情', icon: 'form', keepAlive: true, permission: 'unit_detail' },
+            meta: { title: '单位详情', icon: 'form', keepAlive: false, permission: 'unit_detail' },
             hidden: true
           },
           // 团队管理
@@ -63,7 +61,7 @@ export const asyncRouterMap = [
             path: '/organize/team',
             name: 'Team',
             component: Team,
-            meta: { title: '团队管理', icon: 'bug', keepAlive: true, permission: 'team' },
+            meta: { title: '团队管理', icon: 'bug', keepAlive: false, permission: 'team' },
             hidden: false
           }
         ]
@@ -73,7 +71,7 @@ export const asyncRouterMap = [
         path: '/upload',
         name: 'Upload',
         component: Upload,
-        meta: { title: '文件上传', icon: 'upload', keepAlive: true, permission: 'upload' },
+        meta: { title: '文件上传', icon: 'upload', keepAlive: false, permission: 'upload' },
         hidden: false
       },
       // 设置
@@ -81,7 +79,7 @@ export const asyncRouterMap = [
         path: '/setting',
         name: 'Setting',
         component: Setting,
-        meta: { title: '设置', icon: 'setting', keepAlive: true, permission: 'setting' },
+        meta: { title: '设置', icon: 'setting', keepAlive: false, permission: 'setting' },
         hidden: false
       }
     ]

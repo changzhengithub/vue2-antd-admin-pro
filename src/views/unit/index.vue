@@ -1,34 +1,71 @@
 <template>
   <div class="unit">
-    <div class="unit-wrap">
-      <h1>单位管理</h1>
-      <a-tabs default-active-key="1">
-        <a-tab-pane key="1" tab="Tab 1"> Content of Tab Pane 1 </a-tab-pane>
-        <a-tab-pane key="2" tab="Tab 2" force-render> Content of Tab Pane 2 </a-tab-pane>
-        <a-tab-pane key="3" tab="Tab 3"> Content of Tab Pane 3 </a-tab-pane>
-      </a-tabs>
-    </div>
+    <TreeItem v-for="(item, index) in treeList" :key="index" :depth="0" :treeData="item" @GET_DEPTH_EVENT="getDepth"></TreeItem>
+    <button @click="getDataList">获取数据</button>
+    <TreeList :treeList="treeList" :depth="0" @GET_DEPTH_EVENT="getDepth"></TreeList>
   </div>
 </template>
 <script>
+// import TreeItem from '@/components/TreeItem'
+import TreeList from '@/components/TreeList'
 export default {
-  name: 'Unit',
+  name: 'Recursion',
+  components: {
+    // TreeItem,
+    TreeList
+  },
   data() {
     return {
-      tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']
+      treeList: [
+        {
+          id: 1,
+          label: '文件1',
+          children: [
+            {
+              id: 11,
+              label: '文件11',
+              children: [
+                {
+                  id: 111,
+                  label: '文件111',
+                  children: []
+                },
+                {
+                  id: 112,
+                  label: '文件112',
+                  children: []
+                }
+              ]
+            },
+            {
+              id: 12,
+              label: '文件12',
+              children: []
+            },
+            {
+              id: 12,
+              label: '文件12',
+              children: []
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: '文件2',
+          children: []
+        }
+      ]
     }
   },
   activated() {
     console.log('111111')
   },
   methods: {
-    togoPage(id) {
-      this.$router.push({
-        name: 'UnitDetail',
-        params: {
-          id
-        }
-      })
+    getDataList() {
+      console.log(this.treeList)
+    },
+    getDepth(depth) {
+      console.log(depth)
     }
   }
 }
@@ -37,6 +74,7 @@ export default {
 <style lang="less" scoped>
 .unit {
   width: 100%;
+  padding: 20px;
   background-color: #fff;
   .unit-wrap {
     width: 100%;

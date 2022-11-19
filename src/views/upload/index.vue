@@ -1,14 +1,16 @@
 <template>
   <div class="upload">
-    <a-upload
-      name="file"
-      action="/file/upload"
-      :headers="headers"
-      :data="params"
-      @change="handleChange"
-    >
-      <a-button> <a-icon type="upload" /> Click to Upload </a-button>
-    </a-upload>
+    <div class="upload-item">
+      <a-upload
+        name="file"
+        action="/file/upload"
+        :headers="headers"
+        :data="params"
+        @change="handleChange"
+      >
+        <a-button> <a-icon type="upload" /> Click to Upload </a-button>
+      </a-upload>
+    </div>
   </div>
 </template>
 <script>
@@ -47,9 +49,12 @@ export default {
   width: 100%;
   height: 500px;
   background-color: #fff;
-  .unit-wrap {
+  .upload-item {
     width: 100%;
-    height: 2000px;
+    padding: 20px;
+    min-height: 200px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
   }
 }
 
