@@ -78,6 +78,9 @@
       <div class="index-chart">
         <div class="chart-line" id="line-area"></div>
       </div>
+      <div class="index-chart">
+        <div class="chart-map" id="chart-map"></div>
+      </div>
     </a-spin>
   </div>
 </template>
@@ -88,17 +91,19 @@
  * */
 
 import CountUp from '@/components/CountUp'
-
+import { mapData, geoCoordMap } from '@/json/map.json'
+/* eslint-disable */
 // 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
 import * as echarts from 'echarts/core'
+import 'echarts-extension-amap'
 // 引入柱状图图表，图表后缀都为 Chart
-import { BarChart, PieChart, LineChart } from 'echarts/charts'
+import { BarChart, PieChart, LineChart, ScatterChart, EffectScatterChart } from 'echarts/charts'
 // 引入提示框，标题，直角坐标系组件，组件后缀都为 Component
 import { TitleComponent, TooltipComponent, GridComponent, LegendComponent, GraphicComponent } from 'echarts/components'
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers'
 // 注册必须的组件
-echarts.use([TitleComponent, TooltipComponent, GridComponent, LegendComponent, GraphicComponent, BarChart, PieChart, LineChart, CanvasRenderer])
+echarts.use([TitleComponent, TooltipComponent, GridComponent, LegendComponent, GraphicComponent, BarChart, PieChart, LineChart, ScatterChart, EffectScatterChart, CanvasRenderer])
 
 export default {
   name: 'Home',
@@ -107,7 +112,9 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      mapData,
+      geoCoordMap
     }
   },
 
@@ -115,6 +122,7 @@ export default {
     this.loading = true
     setTimeout(() => {
       this.$nextTick(() => {
+        this.drawCateMap()
         this.drawHFInstanceBar()
         this.drawUserOrderPie()
         this.drawInstanceQueryBar()
@@ -625,6 +633,108 @@ export default {
       window.addEventListener('resize', () => {
         myChart.resize()
       })
+    },
+
+    convertData(data) {
+      var res = []
+      for (var i = 0; i < data.length; i++) {
+        var geoCoord = this.geoCoordMap[data[i].name]
+        if (geoCoord) {
+          res.push({
+            name: data[i].name,
+            value: geoCoord.concat(data[i].value)
+          })
+        }
+      }
+      return res
+    },
+    drawCateMap() {
+      const myChart = echarts.init(document.getElementById('chart-map'))
+      // 绘制图表
+      const option = {
+        tooltip: {
+          trigger: 'item'
+        },
+        amap: {
+          viewMode: '3D',
+          center: [104.114129, 37.550339],
+          zoom: 5,
+          lang: 'zh_cn',
+          resizeEnable: true,
+          // 自定义样式 https://lbs.amap.com/api/javascript-api/guide/map/map-style/
+          mapStyle: 'amap://styles/grey'
+        },
+        series: [
+          {
+            name: 'pm2.5',
+            type: 'scatter',
+            coordinateSystem: 'amap',
+            data: this.convertData(this.mapData),
+            symbolSize: function (val) {
+              return val[2] / 10
+            },
+            encode: {
+              value: 2
+            },
+            label: {
+              formatter: '{b}',
+              position: 'right',
+              show: false
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            }
+          },
+          {
+            name: 'Top 5',
+            type: 'effectScatter',
+            coordinateSystem: 'amap',
+            data: this.convertData(
+              this.mapData
+                .sort(function (a, b) {
+                  return b.value - a.value
+                })
+                .slice(0, 6)
+            ),
+            symbolSize: function (val) {
+              return val[2] / 10
+            },
+            encode: {
+              value: 2
+            },
+            showEffectOn: 'render',
+            rippleEffect: {
+              brushType: 'stroke'
+            },
+            label: {
+              formatter: '{b}',
+              position: 'right',
+              show: true
+            },
+            itemStyle: {
+              shadowBlur: 10,
+              shadowColor: '#333'
+            },
+            emphasis: {
+              scale: true
+            },
+            zlevel: 1
+          }
+        ]
+      }
+      option && myChart.setOption(option)
+      window.addEventListener('resize', () => {
+        myChart.resize()
+      })
+
+      // 获取百度地图实例，使用百度地图自带的控件
+      // get AMap extension component
+      // const amap = myChart.getModel().getComponent('amap').getAMap()
+      // amap.setMapStyle('amap://styles/whitesmoke')
+      // amap.addControl(new AMap.Scale())
+      // amap.addControl(new AMap.ToolBar())
     }
   }
 }
@@ -710,6 +820,11 @@ export default {
     .chart-line {
       width: 100%;
       height: 425px;
+      background-color: #fff;
+    }
+    .chart-map {
+      width: 100%;
+      height: 600px;
       background-color: #fff;
     }
   }

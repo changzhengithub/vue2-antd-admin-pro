@@ -12,12 +12,15 @@ const Empower = () => import(/* webpackChunkName: 'empower' */ '@/views/empower'
 const Exception = () => import(/* webpackChunkName: 'exception' */ '@/views/exception')
 
 const Home = () => import(/* webpackChunkName: 'home' */ '@/views/home')
-const Unit = () => import(/* webpackChunkName: 'unit' */ '@/views/unit')
+const Recursion = () => import(/* webpackChunkName: 'recursion' */ '@/views/recursion')
 const UnitDetail = () => import(/* webpackChunkName: 'unit-detail' */ '@/views/unit-detail')
 const Team = () => import(/* webpackChunkName: 'team' */ '@/views/team')
 const User = () => import(/* webpackChunkName: 'user' */ '@/views/user')
 const Upload = () => import(/* webpackChunkName: 'upload' */ '@/views/upload')
 const Setting = () => import(/* webpackChunkName: 'setting' */ '@/views/setting')
+const CodeEditor = () => import(/* webpackChunkName: 'code-editor' */ '@/views/code-editor')
+const Folder = () => import(/* webpackChunkName: 'folder' */ '@/views/folder')
+const Wangeditor = () => import(/* webpackChunkName: 'wangeditor' */ '@/views/wangeditor')
 
 export const asyncRouterMap = [
   {
@@ -42,10 +45,10 @@ export const asyncRouterMap = [
         hidden: false,
         children: [
           {
-            path: '/organize/unit',
-            name: 'Unit',
-            component: Unit,
-            meta: { title: '递归组件', icon: 'api', keepAlive: false, permission: 'unit' },
+            path: '/organize/recursion',
+            name: 'Recursion',
+            component: Recursion,
+            meta: { title: '递归组件', icon: 'api', keepAlive: false, permission: 'recursion' },
             hidden: false
           },
           // 单位详情
@@ -62,6 +65,13 @@ export const asyncRouterMap = [
             name: 'Team',
             component: Team,
             meta: { title: '团队管理', icon: 'bug', keepAlive: false, permission: 'team' },
+            hidden: false
+          },
+          {
+            path: '/organize/wangeditor',
+            name: 'Wangeditor',
+            component: Wangeditor,
+            meta: { title: '富文本', icon: 'bug', keepAlive: false, permission: 'wangeditor' },
             hidden: false
           }
         ]
@@ -80,6 +90,20 @@ export const asyncRouterMap = [
         name: 'Setting',
         component: Setting,
         meta: { title: '设置', icon: 'setting', keepAlive: false, permission: 'setting' },
+        hidden: false
+      },
+      {
+        path: '/code-editor',
+        name: 'CodeEditor',
+        component: CodeEditor,
+        meta: { title: '代码编辑器', icon: 'setting', keepAlive: false, permission: 'setting' },
+        hidden: false
+      },
+      {
+        path: '/folder',
+        name: 'Folder',
+        component: Folder,
+        meta: { title: '文件夹', icon: 'setting', keepAlive: false, permission: 'folder' },
         hidden: false
       }
     ]

@@ -17,6 +17,10 @@ import '@/permission'
 // 自定义指令
 import '@/directives'
 
+// 中央事件Bus
+import EventBus from '@/utils/event-bus'
+Vue.prototype.$bus = EventBus
+
 Vue.config.productionTip = false
 
 Vue.use(Antd)

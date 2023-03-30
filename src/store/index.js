@@ -11,6 +11,18 @@ import empower from './modules/empower'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  state: {
+    root: '111',
+    userName: 'aaa'
+  },
+  mutations: {
+    setRoot(state, root) {
+      state.root = root
+    },
+    setName(state, name) {
+      state.userName = name
+    }
+  },
   modules: {
     publicVuex,
     empower

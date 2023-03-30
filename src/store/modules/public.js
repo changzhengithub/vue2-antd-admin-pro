@@ -4,13 +4,20 @@
 */
 
 const publicVuex = {
+  namespaced: true,
+
   state: {
-    userId: ''
+    userId: '',
+    userName: 'bbb'
   },
 
   mutations: {
     setUserId (state, userId) {
+      console.log(state)
       state.userId = userId
+    },
+    setName(state, name) {
+      state.userName = name
     }
   },
   getters: {},
