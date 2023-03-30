@@ -11,6 +11,10 @@ import './mock'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
+// 图片查看
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
+
 // 权限设置
 import '@/permission'
 
@@ -24,6 +28,7 @@ Vue.prototype.$bus = EventBus
 Vue.config.productionTip = false
 
 Vue.use(Antd)
+Vue.use(VueViewer)
 
 new Vue({
   router,
