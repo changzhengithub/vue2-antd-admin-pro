@@ -45,11 +45,12 @@
 
       <!-- 主体 start -->
       <a-layout-content>
-        <!-- 是否缓存父组件层级 -->
-        <keep-alive>
-          <router-view :key="$route.fullPath" v-if="$route.meta.keepAlive"></router-view>
-        </keep-alive>
-        <router-view :key="$route.fullPath" v-if="!$route.meta.keepAlive"></router-view>
+        <!-- 路由缓存，只针对当前子路由进行缓存 -->
+        <router-view v-slot="{ Component, route }">
+          <keep-alive :include="['RouteView', ...cacheList]">
+            <component :is="Component" :key="route.fullPath"/>
+          </keep-alive>
+        </router-view>
       </a-layout-content>
       <!-- 主体 end -->
       <!-- <a-layout-footer>Footer</a-layout-footer> -->
@@ -83,7 +84,8 @@ export default {
   },
   computed: {
     ...mapState({
-      routerList: state => state.empower.routerList
+      routerList: state => state.empower.routerList,
+      cacheList: state => state.publicVuex.cacheList
     })
   },
 
@@ -94,6 +96,7 @@ export default {
   },
 
   created() {
+    console.log(this.cacheList)
     const menuList = this.getMeunList(this.routerList)
     this.menuList = menuList[0].children
     // this.menuList = asyncRouterMap[0].children

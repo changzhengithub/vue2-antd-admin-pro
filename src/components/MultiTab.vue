@@ -13,6 +13,7 @@
  * @example 调用示例
  * <MultiTab></MultiTab>
  */
+import { mapMutations } from 'vuex'
 export default {
   name: 'MultiTab',
   data() {
@@ -29,6 +30,7 @@ export default {
         this.fullPathList.push(newVal.fullPath)
         this.pages.push(newVal)
       }
+      this.setTabsCache()
     },
     activeKey(newPathKey) {
       this.$router.push({ path: newPathKey })
@@ -38,6 +40,7 @@ export default {
     this.getRoute()
   },
   methods: {
+    ...mapMutations(['setCacheList']),
     getRoute() {
       const route = this.$route
       this.activeKey = route.fullPath
@@ -45,6 +48,7 @@ export default {
         this.fullPathList.push(route.fullPath)
         this.pages.push(route)
       }
+      this.setTabsCache()
     },
     onEdit(targetKey, action) {
       this[action](targetKey)
@@ -52,6 +56,7 @@ export default {
     remove (targetKey) {
       this.pages = this.pages.filter(page => page.fullPath !== targetKey)
       this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
+      this.setTabsCache()
       // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
       if (!this.fullPathList.includes(this.activeKey)) {
         this.selectedLastPath()
@@ -59,6 +64,12 @@ export default {
     },
     selectedLastPath () {
       this.activeKey = this.fullPathList[this.fullPathList.length - 1]
+    },
+    // 设置缓存
+    setTabsCache () {
+      const cacheList = this.pages.filter(item => item.meta.keepAlive).map(item => item.name)
+      console.log(cacheList)
+      this.setCacheList(cacheList)
     }
   }
 }

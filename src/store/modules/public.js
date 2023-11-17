@@ -5,12 +5,16 @@
 
 const publicVuex = {
   state: {
-    userId: ''
+    userId: '',
+    cacheList: [] // 缓存列表
   },
 
   mutations: {
     setUserId (state, userId) {
       state.userId = userId
+    },
+    setCacheList (state, cacheList) {
+      state.cacheList = cacheList
     }
   },
   getters: {},

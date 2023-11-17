@@ -108,12 +108,11 @@ export default empower
 // 根据具体业务来进行过滤
 function filterAsyncRouter(routerMap, permissionList) {
   const routerList = routerMap.filter(route => {
-    if (route.name === 'Index') return true
-    if (route.meta && route.meta.permission) {
-      const { permission } = route.meta;
-      if (permissionList.includes(permission)) {
+    if (route.meta) {
+      const { isAuth, permission } = route.meta
+      if (!isAuth || permissionList.includes(permission)) {
         if (route.children && route.children.length) {
-          route.children = filterAsyncRouter(route.children, permissionList);
+          route.children = filterAsyncRouter(route.children, permissionList)
           // 如果有子路由重定向到第一个
           if (route.children.length) route.redirect = route.children[0].path
         }

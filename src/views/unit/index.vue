@@ -1,6 +1,6 @@
 <template>
   <div class="unit">
-    <TreeItem v-for="(item, index) in treeList" :key="index" :depth="0" :treeData="item" @GET_DEPTH_EVENT="getDepth"></TreeItem>
+    <!-- <TreeItem v-for="(item, index) in treeList" :key="index" :depth="0" :treeData="item" @GET_DEPTH_EVENT="getDepth"></TreeItem> -->
     <button @click="getDataList">获取数据</button>
     <TreeList :treeList="treeList" :depth="0" @GET_DEPTH_EVENT="getDepth"></TreeList>
   </div>
@@ -9,7 +9,7 @@
 // import TreeItem from '@/components/TreeItem'
 import TreeList from '@/components/TreeList'
 export default {
-  name: 'Recursion',
+  name: 'Unit',
   components: {
     // TreeItem,
     TreeList

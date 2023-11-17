@@ -7,6 +7,7 @@
       <a-select-option value="disabled" disabled> Disabled </a-select-option>
       <a-select-option value="Yiminghe"> yiminghe </a-select-option>
     </a-select>
+    <a-input v-model="date"></a-input>
     <h1>{{ date }}</h1>
     <h1>{{ diffDate }}</h1>
     <h1>{{ stamp }}</h1>
