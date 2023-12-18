@@ -46,11 +46,9 @@
       <!-- 主体 start -->
       <a-layout-content>
         <!-- 路由缓存，只针对当前子路由进行缓存 -->
-        <router-view v-slot="{ Component, route }">
-          <keep-alive :include="['RouteView', ...cacheList]">
-            <component :is="Component" :key="route.fullPath"/>
-          </keep-alive>
-        </router-view>
+        <keep-alive :include="['RouteView', ...cacheList]">
+          <router-view></router-view>
+        </keep-alive>
       </a-layout-content>
       <!-- 主体 end -->
       <!-- <a-layout-footer>Footer</a-layout-footer> -->

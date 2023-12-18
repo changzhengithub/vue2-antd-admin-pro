@@ -1,10 +1,13 @@
 <template>
   <!-- 每个路由只缓存当前的子路由 -->
-  <router-view v-slot="{ Component, route }">
+  <keep-alive :include="cacheList">
+    <router-view></router-view>
+  </keep-alive>
+  <!-- <router-view v-slot="{ Component, route }">
     <keep-alive :include="cacheList">
       <component :is="Component" :key="route.fullPath"/>
     </keep-alive>
-  </router-view>
+  </router-view> -->
 </template>
 <script>
 /**

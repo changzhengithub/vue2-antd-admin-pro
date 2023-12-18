@@ -1,7 +1,7 @@
 <template>
   <div class="tab">
-    <a-tabs v-model="activeKey" hideAdd type="editable-card" :tabBarStyle="{ background: '#FFF', margin: 0, paddingLeft: '20px', paddingTop: '1px' }" @edit="onEdit">
-      <a-tab-pane v-for="page in pages" :key="page.fullPath" :tab="page.meta.title" :closable="pages.length > 1"></a-tab-pane>
+    <a-tabs v-model="activeKey" hideAdd type="editable-card" :tabBarStyle="{ background: '#FFF', margin: 0, paddingLeft: '20px', paddingTop: '1px' }" @edit="removeTab" @change="switchTab">
+      <a-tab-pane v-for="page in pageList" :key="page.path" :tab="page.meta.title" :closable="pageList.length > 1"></a-tab-pane>
     </a-tabs>
   </div>
 </template>
@@ -19,21 +19,13 @@ export default {
   data() {
     return {
       fullPathList: [],
-      pages: [],
-      activeKey: ''
+      activeKey: '',
+      pageList: []
     }
   },
   watch: {
-    '$route'(newVal) {
-      this.activeKey = newVal.fullPath
-      if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
-        this.fullPathList.push(newVal.fullPath)
-        this.pages.push(newVal)
-      }
-      this.setTabsCache()
-    },
-    activeKey(newPathKey) {
-      this.$router.push({ path: newPathKey })
+    '$route'() {
+      this.getRoute()
     }
   },
   created() {
@@ -43,31 +35,31 @@ export default {
     ...mapMutations(['setCacheList']),
     getRoute() {
       const route = this.$route
-      this.activeKey = route.fullPath
-      if (this.fullPathList.indexOf(route.fullPath) < 0) {
-        this.fullPathList.push(route.fullPath)
-        this.pages.push(route)
-      }
-      this.setTabsCache()
-    },
-    onEdit(targetKey, action) {
-      this[action](targetKey)
-    },
-    remove (targetKey) {
-      this.pages = this.pages.filter(page => page.fullPath !== targetKey)
-      this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
-      this.setTabsCache()
-      // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
-      if (!this.fullPathList.includes(this.activeKey)) {
-        this.selectedLastPath()
+      this.activeKey = route.path
+      const pathList = this.pageList.map(item => item.path)
+      if (!pathList.includes(route.path)) {
+        this.pageList.push(route)
+        this.setTabsCache()
       }
     },
-    selectedLastPath () {
-      this.activeKey = this.fullPathList[this.fullPathList.length - 1]
+    switchTab(activeKey) {
+      this.$router.push({ path: activeKey })
+    },
+    removeTab(targetKey) {
+      const index = this.pageList.findIndex(item => item.path === targetKey)
+      if (index !== -1) {
+        this.pageList.splice(index, 1)
+        // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
+        if (this.activeKey === targetKey) {
+          this.activeKey = this.pageList[this.pageList.length - 1].path
+          this.switchTab(this.activeKey)
+        }
+        this.setTabsCache()
+      }
     },
     // 设置缓存
     setTabsCache () {
-      const cacheList = this.pages.filter(item => item.meta.keepAlive).map(item => item.name)
+      const cacheList = this.pageList.filter(item => item.meta.keepAlive).map(item => item.name)
       console.log(cacheList)
       this.setCacheList(cacheList)
     }
