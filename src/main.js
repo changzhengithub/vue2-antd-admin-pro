@@ -9,7 +9,10 @@ import './mock'
 
 // 引入 Antd UI
 import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
+// import 'ant-design-vue/dist/antd.css'
+
+// 自定义主题
+import '@/assets/less/theme.less'
 
 // 权限设置
 import '@/permission'
