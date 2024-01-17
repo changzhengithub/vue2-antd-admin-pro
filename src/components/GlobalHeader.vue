@@ -6,7 +6,18 @@
         <a-icon type="menu-fold" v-else />
       </div>
     </div>
-    <HeaderRight mode="left"></HeaderRight>
+    <div class="header-right">
+      <div class="right-operate">
+        <div class="operate-item">
+          <a-tooltip title="消息中心">
+            <a-badge dot :count="userInfo.unread_msg_nums">
+              <a-icon type="bell" @click="gotoPage('MessageCenter')" />
+            </a-badge>
+          </a-tooltip>
+        </div>
+      </div>
+      <HeaderRight mode="left"></HeaderRight>
+    </div>
   </div>
 </template>
 
@@ -38,6 +49,12 @@ export default {
   methods: {
     ...mapActions(['Logout']),
 
+    gotoPage(name) {
+      this.$router.push({
+        name
+      })
+    },
+
     openPersonalInfo() {
       this.$router.push({
         name: 'User'
@@ -55,7 +72,6 @@ export default {
         content: '确定要退出登录？',
         onOk: () => {
           return this.Logout().then((res) => {
-            console.log(res)
             if (res.code !== 200) {
               this.$notification.error({
                 message: '错误',
@@ -96,10 +112,19 @@ export default {
     }
   }
 
-  .header-user {
-    .flex_vertical_center();
+  .header-right {
+    display: flex;
+    align-items: center;
     height: 100%;
-    cursor: pointer;
+    .right-operate {
+      display: flex;
+      .operate-item {
+        margin-right: 16px;
+        font-size: 14px;
+        color: #4E5969;
+        cursor: pointer;
+      }
+    }
   }
 }
 

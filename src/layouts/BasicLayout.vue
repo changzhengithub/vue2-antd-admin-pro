@@ -94,7 +94,6 @@ export default {
   },
 
   created() {
-    console.log(this.cacheList)
     const menuList = this.getMeunList(this.routerList)
     this.menuList = menuList[0].children
     // this.menuList = asyncRouterMap[0].children

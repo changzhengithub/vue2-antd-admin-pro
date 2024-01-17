@@ -1,14 +1,18 @@
 <template>
-  <div class="unit-detail">
-    <h1>单位详情</h1>
+  <div class="user">
+    <h1>消息中心</h1>
   </div>
 </template>
 <script>
+/**
+ * @description 消息中心
+ * @author changz
+ * */
 export default {
-  name: 'UnitDetail',
+  name: 'User',
   data() {
     return {
-      tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']
+      tags: ['很有想法的', '专注设计', '海纳百川']
     }
   },
 

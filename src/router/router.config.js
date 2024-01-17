@@ -18,12 +18,12 @@ const Exception = () => import(/* webpackChunkName: 'exception' */ '@/views/exce
 const Promotion = () => import(/* webpackChunkName: 'promotion' */ '@/views/promotion')
 
 const Home = () => import(/* webpackChunkName: 'home' */ '@/views/home')
-const Unit = () => import(/* webpackChunkName: 'unit' */ '@/views/unit')
-const UnitDetail = () => import(/* webpackChunkName: 'unit-detail' */ '@/views/unit-detail')
-const Team = () => import(/* webpackChunkName: 'team' */ '@/views/team')
+const OrgManage = () => import(/* webpackChunkName: 'org-manage' */ '@/views/org-manage')
+const RoleManage = () => import(/* webpackChunkName: 'role-manage' */ '@/views/role-manage')
 const User = () => import(/* webpackChunkName: 'user' */ '@/views/user')
-const Upload = () => import(/* webpackChunkName: 'upload' */ '@/views/upload')
+const Example = () => import(/* webpackChunkName: 'example' */ '@/views/example')
 const Setting = () => import(/* webpackChunkName: 'setting' */ '@/views/setting')
+const MessageCenter = () => import(/* webpackChunkName: 'message-center' */ '@/views/message-center')
 
 export const asyncRouterMap = [
   {
@@ -32,7 +32,6 @@ export const asyncRouterMap = [
     component: BasicLayout,
     meta: { keepAlive: true, isAuth: false },
     children: [
-      // 首页
       {
         path: '/home',
         name: 'Home',
@@ -44,58 +43,52 @@ export const asyncRouterMap = [
         path: '/organize',
         name: 'Organize',
         component: RouteView,
-        meta: { title: '组织管理', icon: 'bar-chart', keepAlive: true, isAuth: true, permission: 'org' },
+        meta: { title: '角色组织', icon: 'user', keepAlive: true, isAuth: true, permission: 'organize' },
         hidden: false,
         children: [
           {
-            path: '/organize/unit',
-            name: 'Unit',
-            component: Unit,
-            meta: { title: '递归组件', icon: 'api', keepAlive: true, isAuth: true, permission: 'unit' },
+            path: '/organize/org-manage',
+            name: 'OrgManage',
+            component: OrgManage,
+            meta: { title: '组织管理', icon: 'apartment', keepAlive: true, isAuth: true, permission: 'org_manage' },
             hidden: false
           },
-          // 单位详情
           {
-            path: '/organize/unit/:id',
-            name: 'UnitDetail',
-            component: UnitDetail,
-            meta: { title: '单位详情', icon: 'form', keepAlive: true, isAuth: true, permission: 'unit_detail' },
-            hidden: true
-          },
-          // 团队管理
-          {
-            path: '/organize/team',
-            name: 'Team',
-            component: Team,
-            meta: { title: '团队管理', icon: 'bug', keepAlive: true, isAuth: true, permission: 'team' },
+            path: '/organize/role-manage',
+            name: 'RoleManage',
+            component: RoleManage,
+            meta: { title: '角色管理', icon: 'team', keepAlive: true, isAuth: true, permission: 'role_manage' },
             hidden: false
           }
         ]
       },
-      // 文件上传
       {
-        path: '/upload',
-        name: 'Upload',
-        component: Upload,
-        meta: { title: '文件上传', icon: 'upload', keepAlive: true, isAuth: true, permission: 'upload' },
+        path: '/example',
+        name: 'Example',
+        component: Example,
+        meta: { title: '示例', icon: 'line-chart', keepAlive: true, isAuth: true, permission: 'example' },
         hidden: false
       },
-      // 设置
       {
         path: '/setting',
         name: 'Setting',
         component: Setting,
-        meta: { title: '设置', icon: 'setting', keepAlive: true, isAuth: true, permission: 'setting' },
+        meta: { title: '系统设置', icon: 'setting', keepAlive: true, isAuth: true, permission: 'setting' },
         hidden: false
       }
     ]
   },
-  // 用户信息
   {
     path: '/user',
     name: 'User',
     component: User,
-    meta: { keepAlive: false, isAuth: false, permission: 'user' }
+    meta: { title: '个人中心', keepAlive: false, isAuth: false, permission: 'user' }
+  },
+  {
+    path: '/user',
+    name: 'MessageCenter',
+    component: MessageCenter,
+    meta: { title: '消息中心', keepAlive: false, isAuth: false, permission: 'message_center' }
   }
 ]
 

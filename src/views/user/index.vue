@@ -1,14 +1,18 @@
 <template>
   <div class="user">
-    <h1>用户信息</h1>
+    <h1>个人中心</h1>
   </div>
 </template>
 <script>
+/**
+ * @description 个人中心
+ * @author changz
+ * */
 export default {
   name: 'User',
   data() {
     return {
-      tags: ['很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川']
+      tags: ['很有想法的', '专注设计', '海纳百川']
     }
   },
 

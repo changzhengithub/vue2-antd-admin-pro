@@ -13,6 +13,8 @@ const empower = {
   state: {
     permission: [], // 权限列表
     routerList: [], // 路由列表
+    menu_perm: [], // 路由权限列表
+    operate_perm: [] // 操作权限列表
   },
   mutations: {
     // 设置权限列表
@@ -22,6 +24,14 @@ const empower = {
     // 过滤后的路由列表
     setRouterList(state, routerList) {
       state.routerList = routerList
+    },
+    // 设置页面权限列表
+    setMenuPerm(state, menu_perm) {
+      state.menu_perm = menu_perm
+    },
+    // 设置操作权限列表
+    setOperatePerm(state, operate_perm) {
+      state.operate_perm = operate_perm
     }
   },
   actions: {
@@ -43,17 +53,18 @@ const empower = {
     GetInfo({ commit }, params) {
       return new Promise((resolve, reject) => {
         infoApi(params).then(res => {
-          console.log(res)
           const data = res.data
           // 缓存用户信息
           storage.set(USER_INFO, data)
           // 获取用户权限列表，可以是后端直接返回权限列表，也可以根据返回角色类型设置权限列表
           const { role } = data
           const roleMenu = {
-            '1': ['home', 'org', 'unit', 'team', 'setting', 'user'], // 管理员
-            '2': ['home', 'org', 'unit', 'team', 'user'] // 用户
+            '1': ['home', 'organize', 'org_manage', 'role_manage', 'example', 'setting', 'user'], // 管理员
+            '2': ['home', 'organize', 'org_manage', 'role_manage', 'example', 'user'] // 用户
           }
           const permissionList = roleMenu[role]
+          commit('setMenuPerm', permissionList)
+          commit('setOperatePerm', [])
           if (permissionList.length) {
             // 保存权限列表
             commit('setPermission', permissionList)
@@ -72,7 +83,6 @@ const empower = {
       const { permissionList } = res;
       return new Promise(resolve => {
         const routerList = filterAsyncRouter(asyncRouterMap, permissionList)
-        console.log(routerList);
         routerList.push({
           path: '*',
           redirect: '/exception',

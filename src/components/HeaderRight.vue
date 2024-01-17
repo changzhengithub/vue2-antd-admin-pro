@@ -65,7 +65,6 @@ export default {
         content: '确定要退出登录？',
         onOk: () => {
           return this.Logout().then((res) => {
-            console.log(res)
             if (res.code !== 200) {
               this.$notification.error({
                 message: '错误',

@@ -60,7 +60,6 @@ export default {
     // 设置缓存
     setTabsCache () {
       const cacheList = this.pageList.filter(item => item.meta.keepAlive).map(item => item.name)
-      console.log(cacheList)
       this.setCacheList(cacheList)
     }
   }
